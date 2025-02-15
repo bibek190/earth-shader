@@ -36,7 +36,7 @@ cloudMix *= dayMix;
 color = mix(color,vec3(1.0),cloudMix);
 
 // Fresnel
-float fresnel = dot(viewDirection,normal) + 1.0;
+float fresnel = dot(viewDirection,normal) + 0.8;
 fresnel = pow(fresnel,2.0);
 
 // ATMOSPHERE
@@ -44,6 +44,11 @@ float atmosphereDayMix = smoothstep(-0.5,1.0,sunOrientation);
 vec3 atmosphereColor = mix(uAtmosphereTwilightColor,uAtmosphereDayColor,atmosphereDayMix);
 color = mix(color,atmosphereColor,fresnel*atmosphereDayMix);
 
+
+// Specular
+vec3 reflection = reflect(-uSunDirection,normal);
+float specular = -dot(reflection,viewDirection);
+color = vec3(specular);
 
     //
     // Final color
