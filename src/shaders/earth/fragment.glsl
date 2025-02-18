@@ -45,11 +45,13 @@ vec3 atmosphereColor = mix(uAtmosphereTwilightColor,uAtmosphereDayColor,atmosphe
 color = mix(color,atmosphereColor,fresnel*atmosphereDayMix);
 
 
+
 // Specular
 vec3 reflection = reflect(-uSunDirection,normal);
 float specular = -dot(reflection,viewDirection);
 specular = max(specular,0.0);
 specular = pow(specular,32.0);
+specular *=specularCloudsColor.r;
 
 vec3 specularColor = mix(vec3(1.0),atmosphereColor,fresnel);
 color += specularColor * specular;
